@@ -1,0 +1,113 @@
+{
+  "name": "Deadman Vault - Check In Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "triggerTimes": [
+          {
+            "mode": "everyDay",
+            "hour": 10,
+            "minute": 0
+          }
+        ]
+      },
+      "id": "1",
+      "name": "Cron Trigger",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api/last-checkin",
+        "responseFormat": "json"
+      },
+      "id": "2",
+      "name": "Get Last CheckIn",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [400, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ new Date().getTime() - new Date($json[\"lastCheckIn\"]).getTime() }}",
+              "operation": "larger",
+              "value2": "259200000"
+            }
+          ]
+        }
+      },
+      "id": "3",
+      "name": "Check Delay > 3 days?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [600, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:3000/api/claim-secret",
+        "method": "POST",
+        "responseFormat": "json",
+        "bodyParametersUi": {
+          "parameter": [
+            {
+              "name": "vaultId",
+              "value": "={{ $json[\"vaultId\"] }}"
+            }
+          ]
+        }
+      },
+      "id": "4",
+      "name": "Trigger Smart Contract",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [800, 300]
+    },
+    {
+      "parameters": {
+        "chatId": "123456789",
+        "text": "⚠️ Se ha ejecutado el Dead Man’s Switch para el vault con ID: {{ $json[\"vaultId\"] }}.",
+        "additionalFields": {}
+      },
+      "id": "5",
+      "name": "Notify Heir via Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [1000, 300],
+      "credentials": {
+        "telegramApi": {
+          "id": "1",
+          "name": "Telegram Account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Cron Trigger": {
+      "main": [[{ "node": "Get Last CheckIn", "type": "main", "index": 0 }]]
+    },
+    "Get Last CheckIn": {
+      "main": [[{ "node": "Check Delay > 3 days?", "type": "main", "index": 0 }]]
+    },
+    "Check Delay > 3 days?": {
+      "main": [
+        [{ "node": "Trigger Smart Contract", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Trigger Smart Contract": {
+      "main": [[{ "node": "Notify Heir via Telegram", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "id": "deadman-vault-checkin-001",
+  "versionId": "1",
+  "tags": [],
+  "meta": {
+    "instanceId": "example-instance"
+  }
+}
