@@ -12,15 +12,15 @@ My name is Georgi, and I’m not a developer. This project was created as a lear
 
 ---
 
-## 🌍 How It Works – Real Use Case
+##  How It Works – Real Use Case
 
 1. **Vault Creation**:
-   - A user (owner) creates a vault by storing an encrypted secret (e.g., password, seed phrase).
+   - A user "owner" creates a vault by storing an encrypted secret (password, seed phrase).
    - The owner designates a **heir address** who can claim the secret in case of inactivity.
 
 2. **Check-in Mechanism**:
    - The owner must regularly check in (prove they are alive).
-   - If they don’t check in for a specified time (e.g. 365 days), the system considers them inactive.
+   - If they don’t check in for a specified time (e.g. 30 days), the system considers them inactive.
 
 3. **Dead Man's Switch Activation**:
    - A scheduled automation via n8n checks daily if any vaults have expired check-ins.
@@ -33,7 +33,7 @@ This system could be applied to inheritance, custody of crypto assets, emergency
 
 ---
 
-## 🧪 What Was Built – The Proof of Concept
+##  What Was Built – The Proof of Concept
 
 This PoC demonstrates the full lifecycle of the Dead Man’s Switch:
 
@@ -47,18 +47,18 @@ This PoC demonstrates the full lifecycle of the Dead Man’s Switch:
 
 ## 🏗️ Stack Used
 
-| Layer        | Tech                                    |
-|--------------|-----------------------------------------|
-| Smart Contract | Solidity + Hardhat + PolkaVM (Paseo) |
-| Frontend     | React + Vite                           |
-| Backend      | Node.js + Express + Ethers.js          |
-| Automation   | n8n (open-source automation tool)       |
-| Blockchain   | Polkadot Testnet – Paseo                |
-| Notifications| Telegram Bot API                        |
+| Layer          | Tech                                    |
+|----------------|-----------------------------------------|
+| Smart Contract | Solidity + Hardhat + PolkaVM (Paseo)    |
+| Frontend       | React + Vite                            |
+| Backend        | Node.js + Express + Ethers.js           |
+| Automation     | n8n                                     |
+| Blockchain     | Polkadot Testnet – Paseo                |
+| Notifications  | Telegram Bot API                        |
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 Deadman-Vault-W3S-Berlin/
@@ -72,7 +72,7 @@ Deadman-Vault-W3S-Berlin/
 
 ---
 
-## ⚙️ How to Run It
+##  How to Run It
 
 ### 1. Deploy the Contract
 
