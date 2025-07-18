@@ -45,7 +45,7 @@ This PoC demonstrates the full lifecycle of the Dead Man’s Switch:
 
 ---
 
-## 🏗️ Stack Used
+##  Stack Used
 
 | Layer          | Tech                                    |
 |----------------|-----------------------------------------|
@@ -109,13 +109,13 @@ This automation will:
 
 ---
 
-## 📝 Notes & Improvements
+##  Notes & Improvements
 
-- Identity/death verification can be connected to real-world APIs.
+- in real MVP Identity/death verification can be connected to real-world APIs.
 
 ---
 
-## 📜 License
+##  License
 
 MIT License – Feel free to fork, improve, or build on top of it.
 
